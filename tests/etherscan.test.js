@@ -18,7 +18,7 @@ test('MCP server responds to list_tools request', async () => {
   const listToolsRequest = {
     jsonrpc: '2.0',
     id: '1',
-    method: 'list_tools',
+    method: 'tools/list',
     params: {}
   };
 
@@ -32,11 +32,21 @@ test('MCP server responds to list_tools request', async () => {
     }
   }
 
+  console.log('Server response:', output);
   const response = JSON.parse(output);
+  console.log('Parsed response:', JSON.stringify(response, null, 2));
   assert.strictEqual(response.jsonrpc, '2.0');
   assert.strictEqual(response.id, '1');
-  assert.ok(Array.isArray(response.result.tools));
-  assert.ok(response.result.tools.length > 0);
+  
+  // Check if response has the expected structure
+  if (response.error) {
+    console.error('Error in response:', response.error);
+    assert.fail(`Server returned an error: ${JSON.stringify(response.error)}`);
+  }
+  
+  assert.ok(response.result, 'Response should have a result property');
+  assert.ok(Array.isArray(response.result.tools), 'Result should have an array of tools');
+  assert.ok(response.result.tools.length > 0, 'Tools array should not be empty');
 
   server.kill();
 });
