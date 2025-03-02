@@ -1,0 +1,35 @@
+{
+  "name": "@dcspark/mcp-server-etherscan",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol server for Etherscan",
+  "license": "MIT",
+  "author": "dcSpark <hello@dcspark.io>",
+  "bugs": "https://github.com/dcspark/mcp-server-etherscan/issues",
+  "homepage": "https://github.com/dcspark/mcp-server-etherscan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dcspark/mcp-server-etherscan.git"
+  },
+  "type": "module",
+  "bin": {
+    "mcp-server-etherscan": "build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "test": "npm run build && TEST_MODE=true node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.8",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
